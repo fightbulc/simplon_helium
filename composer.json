@@ -1,0 +1,29 @@
+{
+    "name": "simplon/helium",
+    "description": "Urban Airship Library",
+    "homepage": "https://github.com/fightbulc/simplon_helium",
+    "version": "0.0.1",
+    "type": "library",
+    "keywords": ["urban airship", "notifications", "ios"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tino Ehrich",
+            "email": "opensource@efides.com",
+            "role": "developer"
+        }
+    ],
+
+    "minimum-stability": "dev",
+
+    "require": {
+        "php": ">=5.3.3",
+        "fightbulc/php_curl": "dev-master"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Simplon\\Helium\\": "src/"
+        }
+    }
+}
