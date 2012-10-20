@@ -34,10 +34,10 @@
     // ##########################################
 
     /**
-     * @param $deviceTokens
+     * @param array $deviceTokens
      * @return PushNotification
      */
-    public function setDeviceTokens($deviceTokens)
+    public function setDeviceTokens(array $deviceTokens)
     {
       $this->deviceTokens = $deviceTokens;
 
@@ -57,10 +57,10 @@
     // ##########################################
 
     /**
-     * @param $deviceTokens
+     * @param array $deviceTokens
      * @return PushNotification
      */
-    public function setExcludedDeviceTokens($deviceTokens)
+    public function setExcludedDeviceTokens(array $deviceTokens)
     {
       $this->excludedDeviceTokens = $deviceTokens;
 
@@ -80,10 +80,10 @@
     // ##########################################
 
     /**
-     * @param $aliases
+     * @param array $aliases
      * @return PushNotification
      */
-    public function setAliases($aliases)
+    public function setAliases(array $aliases)
     {
       $this->aliases = $aliases;
 
@@ -106,7 +106,7 @@
      * @param $tags
      * @return PushNotification
      */
-    public function setTags($tags)
+    public function setTags(array $tags)
     {
       $this->tags = $tags;
 
