@@ -10,10 +10,10 @@
 # Simplon/Helium
 
 For one of my projects I had the need to talk to Urbain Airship's [Push API](https://docs.urbanairship.com/display/DOCS/Server%3A+iOS+Push+API).  
-So, I took today off to write an abstract project as composer package so that its easy to implement in other projects too.
+So, I took today off to write an abstract project as composer package so that it is easy to implement in other projects too.
 
 ### Setup
-Since its a composer package all you need to to do is require it within your composer package definitions:
+Since its a composer package all you need to to do is require it within your composer package definitions and install/update it:
 
 ```json
 "require": {
@@ -53,7 +53,7 @@ $deviceToken->setToken($deviceToken);
 $response = \Simplon\Helium\Air::getInstance()
      ->setApplicationKey($key)
      ->setApplicationSecret($secret)
-     ->registerDeviceToken($ndk);
+     ->registerDeviceToken($deviceToken);
 ```
 
 You're cool if your response results in "OK". If not, dont worry you're still cool but your token didn't get registered unfortunately.  
