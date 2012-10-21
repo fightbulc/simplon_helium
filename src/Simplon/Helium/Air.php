@@ -41,12 +41,7 @@
      */
     public static function init()
     {
-      if(! isset(Air::$_instance))
-      {
-        Air::$_instance = new Air();
-      }
-
-      return Air::$_instance;
+      return new Air();
     }
 
     // ##########################################

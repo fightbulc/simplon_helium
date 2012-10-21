@@ -17,27 +17,7 @@
      */
     public static function init()
     {
-      if(! isset(PushNotification::$_instance))
-      {
-        PushNotification::$_instance = new PushNotification();
-      }
-
-      // reset data
-      PushNotification::$_instance->_resetData();
-
-      return PushNotification::$_instance;
-    }
-
-    // ##########################################
-
-    /**
-     * @return PushNotification
-     */
-    protected function _resetData()
-    {
-      $this->_data = array();
-
-      return $this;
+      return new PushNotification();
     }
 
     // ##########################################

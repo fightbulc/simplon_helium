@@ -17,27 +17,7 @@
      */
     public static function init()
     {
-      if(! isset(DeviceToken::$_instance))
-      {
-        DeviceToken::$_instance = new DeviceToken();
-      }
-
-      // reset data
-      DeviceToken::$_instance->resetData();
-
-      return DeviceToken::$_instance;
-    }
-
-    // ##########################################
-
-    /**
-     * @return DeviceToken
-     */
-    protected function resetData()
-    {
-      $this->data = array();
-
-      return $this;
+      return new DeviceToken();
     }
 
     // ##########################################
