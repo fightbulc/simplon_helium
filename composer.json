@@ -2,7 +2,7 @@
     "name": "simplon/helium",
     "description": "Library to handle iOS Push Notifications via Urban Airship",
     "homepage": "https://github.com/fightbulc/simplon_helium",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "type": "library",
     "keywords": ["urban airship", "notifications", "ios"],
     "license": "MIT",
