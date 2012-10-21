@@ -4,39 +4,38 @@
 
   class DeviceToken
   {
-    /** @var string */
-    private $token = NULL;
-
-    /** @var string */
-    private $alias = NULL;
-
-    /** @var int */
-    private $badge = 0;
+    /** @var DeviceToken */
+    private static $_instance;
 
     /** @var array */
-    private $tags = array();
-
-    /** @var array */
-    private $quietTime = array();
-
-    /** @var string */
-    private $timezone = NULL;
-
-    /** @var bool */
-    private $activeState = FALSE;
-
-    /** @var string */
-    private $lastRegistrationDate;
+    private $data = array();
 
     // ##########################################
 
     /**
-     * @param $alias
      * @return DeviceToken
      */
-    public function setAlias($alias)
+    public static function init()
     {
-      $this->alias = $alias;
+      if(! isset(DeviceToken::$_instance))
+      {
+        DeviceToken::$_instance = new DeviceToken();
+      }
+
+      // reset data
+      DeviceToken::$_instance->resetData();
+
+      return DeviceToken::$_instance;
+    }
+
+    // ##########################################
+
+    /**
+     * @return DeviceToken
+     */
+    protected function resetData()
+    {
+      $this->data = array();
 
       return $this;
     }
@@ -44,22 +43,16 @@
     // ##########################################
 
     /**
-     * @return string
-     */
-    public function getAlias()
-    {
-      return $this->alias;
-    }
-
-    // ##########################################
-
-    /**
-     * @param $badge
+     * @param $key
+     * @param $value
      * @return DeviceToken
      */
-    public function setBadge($badge)
+    protected function setByKey($key, $value)
     {
-      $this->badge = $badge;
+      if(! empty($value))
+      {
+        $this->data[$key] = $value;
+      }
 
       return $this;
     }
@@ -67,153 +60,17 @@
     // ##########################################
 
     /**
-     * @return int
-     */
-    public function getBadge()
-    {
-      return $this->badge;
-    }
-
-    // ##########################################
-
-    /**
-     * @param $start
-     * @param $end
-     * @return DeviceToken
-     */
-    public function setQuietTime($start, $end)
-    {
-      $this->quietTime = array(
-        'start' => $start,
-        'end'   => $end
-      );
-
-      return $this;
-    }
-
-    // ##########################################
-
-    /**
-     * @return array
-     */
-    public function getQuietTime()
-    {
-      return $this->quietTime;
-    }
-
-    // ##########################################
-
-    /**
-     * @param array $tags
-     * @return DeviceToken
-     */
-    public function setTags(array $tags)
-    {
-      $this->tags = $tags;
-
-      return $this;
-    }
-
-    // ##########################################
-
-    /**
-     * @return array
-     */
-    public function getTags()
-    {
-      return $this->tags;
-    }
-
-    // ##########################################
-
-    /**
-     * @param $token
-     * @return DeviceToken
-     */
-    public function setToken($token)
-    {
-      $this->token = $token;
-
-      return $this;
-    }
-
-    // ##########################################
-
-    /**
-     * @return string
-     */
-    public function getToken()
-    {
-      return $this->token;
-    }
-
-    // ##########################################
-
-    /**
-     * @param $timezone
-     * @return DeviceToken
-     */
-    public function setTimezone($timezone)
-    {
-      $this->timezone = $timezone;
-
-      return $this;
-    }
-
-    // ##########################################
-
-    /**
-     * @return string
-     */
-    public function getTimezone()
-    {
-      return $this->timezone;
-    }
-
-    // ##########################################
-
-    /**
-     * @param $date
-     * @return DeviceToken
-     */
-    public function setLastRegistrationDate($date)
-    {
-      $this->lastRegistrationDate = $date;
-
-      return $this;
-    }
-
-    // ##########################################
-
-    /**
-     * @return string
-     */
-    public function getLastRegistrationDate()
-    {
-      return $this->lastRegistrationDate;
-    }
-
-    // ##########################################
-
-    /**
-     * @param $state
-     * @return DeviceToken
-     */
-    public function setActiveState($state)
-    {
-      $this->activeState = $state;
-
-      return $this;
-    }
-
-    // ##########################################
-
-    /**
+     * @param $key
      * @return bool
      */
-    public function getActiveState()
+    protected function getByKey($key)
     {
-      return $this->activeState;
+      if(! isset($this->data[$key]))
+      {
+        return FALSE;
+      }
+
+      return $this->data[$key];
     }
 
     // ##########################################
@@ -224,49 +81,7 @@
      */
     public function setData($jsonData)
     {
-      $data = json_decode($jsonData, TRUE);
-
-      // set token
-      if(! is_null($data['device_token']))
-      {
-        $this->setToken($data['device_token']);
-      }
-
-      // set alias
-      if(! is_null($data['alias']))
-      {
-        $this->setAlias($data['alias']);
-      }
-
-      // set tags
-      if(! empty($data['tags']))
-      {
-        $this->setTags($data['tags']);
-      }
-
-      // set badge
-      $this->setBadge($data['badge']);
-
-      // set quietTime
-      if(! is_null($data['quiettime']['start']))
-      {
-        $this->setQuietTime($data['quiettime']['start'], $data['quiettime']['end']);
-      }
-
-      // set timezone
-      if(! is_null($data['tz']))
-      {
-        $this->setTimezone($data['tz']);
-      }
-
-      // set lastRegistration
-      if(isset($data['last_registration']))
-      {
-        $this->setLastRegistrationDate($data['last_registration']);
-      }
-
-      // set active state
-      $this->setActiveState($data['active']);
+      $this->data = json_decode($jsonData, TRUE);
 
       return $this;
     }
@@ -278,48 +93,170 @@
      */
     public function getData()
     {
-      $data = array();
+      return $this->data;
+    }
 
-      // alias
-      $alias = $this->getAlias();
+    // ##########################################
 
-      if(! empty($alias))
-      {
-        $data['alias'] = $alias;
-      }
+    /**
+     * @param $token
+     * @return DeviceToken
+     */
+    public function setToken($token)
+    {
+      $this->setByKey('token', $token);
 
-      // tags
-      $tags = $this->getTags();
+      return $this;
+    }
 
-      if(! empty($tags))
-      {
-        $data['tags'] = $tags;
-      }
+    // ##########################################
 
-      // badge
-      $badge = $this->getBadge();
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+      return $this->getByKey('token');
+    }
 
-      if($badge > 0)
-      {
-        $data['badge'] = $badge;
-      }
+    // ##########################################
 
-      // quiet time
-      $quietTime = $this->getQuietTime();
+    /**
+     * @param $alias
+     * @return DeviceToken
+     */
+    public function setAlias($alias)
+    {
+      $this->setByKey('alias', $alias);
 
-      if(! empty($quietTime))
-      {
-        $data['quietTime'] = $quietTime;
-      }
+      return $this;
+    }
 
-      // timezone
-      $timezone = $this->getTimezone();
+    // ##########################################
 
-      if(! empty($timezone))
-      {
-        $data['tz'] = $timezone;
-      }
+    /**
+     * @return string
+     */
+    public function getAlias()
+    {
+      return $this->getByKey('alias');
+    }
 
-      return $data;
+    // ##########################################
+
+    /**
+     * @param $badge
+     * @return DeviceToken
+     */
+    public function setBadge($badge)
+    {
+      $this->setByKey('badge', $badge);
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @return int
+     */
+    public function getBadge()
+    {
+      return $this->getByKey('badge');
+    }
+
+    // ##########################################
+
+    /**
+     * @param $start
+     * @param $end
+     * @return DeviceToken
+     */
+    public function setQuietTime($start, $end)
+    {
+      $value = array(
+        'start' => $start,
+        'end'   => $end
+      );
+
+      $this->setByKey('quiettime', $value);
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @return array
+     */
+    public function getQuietTime()
+    {
+      return $this->getByKey('quiettime');
+    }
+
+    // ##########################################
+
+    /**
+     * @param array $tags
+     * @return DeviceToken
+     */
+    public function setTags(array $tags)
+    {
+      $this->setByKey('tags', $tags);
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @return array
+     */
+    public function getTags()
+    {
+      return $this->getByKey('tags');
+    }
+
+    // ##########################################
+
+    /**
+     * @param $timezone
+     * @return DeviceToken
+     */
+    public function setTimezone($timezone)
+    {
+      $this->setByKey('tz', $timezone);
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+      return $this->getByKey('tz');
+    }
+
+    // ##########################################
+
+    /**
+     * @return string
+     */
+    public function getLastRegistrationDate()
+    {
+      return $this->getByKey('last_registration_date');
+    }
+
+    // ##########################################
+
+    /**
+     * @return bool
+     */
+    public function getActiveState()
+    {
+      return $this->getByKey('active');
     }
   }

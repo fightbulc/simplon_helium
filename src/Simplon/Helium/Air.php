@@ -39,7 +39,7 @@
     /**
      * @return Air
      */
-    public static function getInstance()
+    public static function init()
     {
       if(! isset(Air::$_instance))
       {

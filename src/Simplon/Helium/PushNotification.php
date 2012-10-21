@@ -4,42 +4,99 @@
 
   class PushNotification
   {
-    /** @var array */
-    protected $deviceTokens = array();
+    /** @var PushNotification */
+    private static $_instance;
 
     /** @var array */
-    protected $excludedDeviceTokens = array();
-
-    /** @var array */
-    protected $tags = array();
-
-    /** @var array */
-    protected $aliases = array();
-
-    /** @var array */
-    protected $datesScheduled = array();
-
-    /** @var string */
-    protected $badge;
-
-    /** @var string */
-    protected $sound;
-
-    /** @var string */
-    protected $message;
-
-    /** @var array */
-    protected $extraData = array();
+    private $_data = array();
 
     // ##########################################
 
     /**
-     * @param array $deviceTokens
      * @return PushNotification
      */
-    public function setDeviceTokens(array $deviceTokens)
+    public static function init()
     {
-      $this->deviceTokens = $deviceTokens;
+      if(! isset(PushNotification::$_instance))
+      {
+        PushNotification::$_instance = new PushNotification();
+      }
+
+      // reset data
+      PushNotification::$_instance->_resetData();
+
+      return PushNotification::$_instance;
+    }
+
+    // ##########################################
+
+    /**
+     * @return PushNotification
+     */
+    protected function _resetData()
+    {
+      $this->_data = array();
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @param $key
+     * @param $value
+     * @return PushNotification
+     */
+    protected function _setByKey($key, $value)
+    {
+      $this->_data[$key] = $value;
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @param $key
+     * @return bool|mixed
+     */
+    protected function _getByKey($key)
+    {
+      if(! isset($this->_data[$key]))
+      {
+        return FALSE;
+      }
+
+      return $this->_data[$key];
+    }
+
+    // ##########################################
+
+    /**
+     * @param $key
+     * @return array
+     */
+    protected function _getByKeyArrayElement($key)
+    {
+      $cached = $this->_getByKey($key);
+
+      if(! is_array($cached))
+      {
+        $cached = array();
+      }
+
+      return $cached;
+    }
+
+    // ##########################################
+
+    /**
+     * @param $jsonData
+     * @return PushNotification
+     */
+    public function setData($jsonData)
+    {
+      $this->_data = json_decode($jsonData, TRUE);
 
       return $this;
     }
@@ -49,9 +106,32 @@
     /**
      * @return array
      */
-    protected function getDeviceTokens()
+    public function getData()
     {
-      return $this->deviceTokens;
+      return $this->_data;
+    }
+
+    // ##########################################
+
+    /**
+     * @param array $deviceTokens
+     * @return PushNotification
+     */
+    public function setDeviceTokens(array $deviceTokens)
+    {
+      $this->_setByKey('device_tokens', $deviceTokens);
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @return array
+     */
+    protected function _getDeviceTokens()
+    {
+      return $this->_getByKey('device_tokens');
     }
 
     // ##########################################
@@ -62,7 +142,7 @@
      */
     public function setExcludedDeviceTokens(array $deviceTokens)
     {
-      $this->excludedDeviceTokens = $deviceTokens;
+      $this->_setByKey('exclude_tokens', $deviceTokens);
 
       return $this;
     }
@@ -72,9 +152,9 @@
     /**
      * @return array
      */
-    protected function getExcludedDeviceTokens()
+    protected function _getExcludedDeviceTokens()
     {
-      return $this->excludedDeviceTokens;
+      return $this->_getByKey('exclude_tokens');
     }
 
     // ##########################################
@@ -85,7 +165,7 @@
      */
     public function setAliases(array $aliases)
     {
-      $this->aliases = $aliases;
+      $this->_setByKey('aliases', $aliases);
 
       return $this;
     }
@@ -95,9 +175,9 @@
     /**
      * @return array
      */
-    protected function getAliases()
+    protected function _getAliases()
     {
-      return $this->aliases;
+      return $this->_getByKey('aliases');
     }
 
     // ##########################################
@@ -108,7 +188,7 @@
      */
     public function setTags(array $tags)
     {
-      $this->tags = $tags;
+      $this->_setByKey('tags', $tags);
 
       return $this;
     }
@@ -118,9 +198,9 @@
     /**
      * @return array
      */
-    protected function getTags()
+    protected function _getTags()
     {
-      return $this->tags;
+      return $this->_getByKey('tags');
     }
 
     // ##########################################
@@ -129,10 +209,20 @@
      * @param $date
      * @return PushNotification
      */
-    public function setScheduleDate($date)
+    public function setScheduledFor($date)
     {
+      $cached = $this->_getByKey('scheduled_for');
+
+      // catch empty value
+      if(! is_array($cached))
+      {
+        $cached = array();
+      }
+
       // 2009-06-01+13:00:00
-      $this->datesScheduled[] = $date;
+      $cached[] = $date;
+
+      $this->_setByKey('scheduled_for', $cached);
 
       return $this;
     }
@@ -142,9 +232,45 @@
     /**
      * @return array
      */
-    protected function getScheduledDates()
+    protected function _getScheduledFor()
     {
-      return $this->datesScheduled;
+      return $this->_getByKey('scheduled_for');
+    }
+
+    // ##########################################
+
+    /**
+     * @param $key
+     * @param $value
+     * @return PushNotification
+     */
+    protected function _setApsElementByKey($key, $value)
+    {
+      $cached = $this->_getByKeyArrayElement('aps');
+
+      $cached[$key] = $value;
+
+      $this->_setByKey('aps', $cached);
+
+      return $this;
+    }
+
+    // ##########################################
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    protected function _getApsElementByKey($key)
+    {
+      $cached = $this->_getByKeyArrayElement('aps');
+
+      if(! isset($cached[$key]))
+      {
+        return FALSE;
+      }
+
+      return $cached[$key];
     }
 
     // ##########################################
@@ -155,7 +281,7 @@
      */
     public function setBadge($badge)
     {
-      $this->badge = $badge;
+      $this->_setApsElementByKey('badge', $badge);
 
       return $this;
     }
@@ -165,9 +291,9 @@
     /**
      * @return string
      */
-    protected function getBadge()
+    protected function _getBadge()
     {
-      return $this->badge;
+      return $this->_getApsElementByKey('badge');
     }
 
     // ##########################################
@@ -178,7 +304,7 @@
      */
     public function setSound($sound)
     {
-      $this->sound = $sound;
+      $this->_setApsElementByKey('sound', $sound);
 
       return $this;
     }
@@ -188,20 +314,20 @@
     /**
      * @return string
      */
-    protected function getSound()
+    protected function _getSound()
     {
-      return $this->sound;
+      return $this->_getApsElementByKey('badge');
     }
 
     // ##########################################
 
     /**
-     * @param $message
+     * @param $alert
      * @return PushNotification
      */
-    public function setMessage($message)
+    public function setAlert($alert)
     {
-      $this->message = (string)$message;
+      $this->_setApsElementByKey('alert', $alert);
 
       return $this;
     }
@@ -211,9 +337,9 @@
     /**
      * @return string
      */
-    protected function getMessage()
+    protected function _getAlert()
     {
-      return $this->message;
+      return $this->_getApsElementByKey('alert');
     }
 
     // ##########################################
@@ -223,21 +349,15 @@
      * @param $value
      * @return PushNotification
      */
-    public function setExtraData($key, $value)
+    protected function _setMetadataElementByKey($key, $value)
     {
-      $this->extraData[$key] = $value;
+      $cached = $this->_getByKeyArrayElement('metadata');
+
+      $cached[$key] = $value;
+
+      $this->_setByKey('metadata', $cached);
 
       return $this;
-    }
-
-    // ##########################################
-
-    /**
-     * @return array
-     */
-    protected function getExtraData()
-    {
-      return $this->extraData;
     }
 
     // ##########################################
@@ -246,12 +366,16 @@
      * @param $key
      * @return PushNotification
      */
-    public function removeExtraData($key)
+    protected function _removeMetadataElementByKey($key)
     {
-      if(isset($this->extraData[$key]))
+      $cached = $this->_getByKeyArrayElement('metadata');
+
+      if(isset($cached[$key]))
       {
-        unset($this->extraData[$key]);
+        unset($cached[$key]);
       }
+
+      $this->_setByKey('metadata', $cached);
 
       return $this;
     }
@@ -259,87 +383,56 @@
     // ##########################################
 
     /**
+     * @param $key
      * @return bool
      */
-    protected function hasExtraData()
+    protected function _getMetadataElementByKey($key)
     {
-      return empty($this->extraData) ? FALSE : TRUE;
+      $cached = $this->_getByKeyArrayElement('metadata');
+
+      if(! isset($cached[$key]))
+      {
+        return FALSE;
+      }
+
+      return $cached[$key];
     }
 
     // ##########################################
 
     /**
-     * @return array
+     * @param $key
+     * @param $value
+     * @return PushNotification
      */
-    public function getData()
+    public function setMetadata($key, $value)
     {
-      $data = array();
+      $this->_setMetadataElementByKey($key, $value);
 
-      // set device tokens
-      $tokens = $this->getDeviceTokens();
+      return $this;
+    }
 
-      if(! empty($tokens))
-      {
-        $data['device_tokens'] = $tokens;
-      }
+    // ##########################################
 
-      // set excluded device tokens
-      $tokens = $this->getExcludedDeviceTokens();
+    /**
+     * @param $key
+     * @return mixed
+     */
+    protected function _getMetadataByKey($key)
+    {
+      return $this->_getMetadataByKey($key);
+    }
 
-      if(! empty($tokens))
-      {
-        $data['exclude_tokens'] = $tokens;
-      }
+    // ##########################################
 
-      // set aliases
-      $aliases = $this->getAliases();
+    /**
+     * @param $key
+     * @return PushNotification
+     */
+    public function removeMetadataByKey($key)
+    {
+      $this->_removeMetadataElementByKey($key);
 
-      if(! empty($aliases))
-      {
-        $data['aliases'] = $aliases;
-      }
-
-      // set tags
-      $tags = $this->getTags();
-
-      if(! empty($tags))
-      {
-        $data['tags'] = $tags;
-      }
-
-      // set scheduled dates
-      $scheduledDates = $this->getScheduledDates();
-
-      if(! empty($scheduledDates))
-      {
-        $data['scheduled_for'] = $scheduledDates;
-      }
-
-      // handle badge
-      $badge = $this->getBadge();
-
-      if(! empty($badge))
-      {
-        $data['aps']['badge'] = $badge;
-      }
-
-      // handle sound
-      $sound = $this->getSound();
-
-      if(! empty($sound))
-      {
-        $data['aps']['sound'] = $sound;
-      }
-
-      // handle extraData
-      if($this->hasExtraData())
-      {
-        $data['extra'] = $this->getExtraData();
-      }
-
-      // set alert message
-      $data['aps']['alert'] = $this->getMessage();
-
-      return $data;
+      return $this;
     }
   }
