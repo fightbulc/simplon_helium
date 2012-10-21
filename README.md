@@ -45,12 +45,10 @@ $key = '12345';
 $secret = '12345';
 
 // device token entity
-$deviceToken = '111111222233344455AAABBBCCCDDDD';
-$deviceToken = new \Simplon\Helium\DeviceToken();
-$deviceToken->setToken($deviceToken);
+$deviceToken = \Simplon\Helium\DeviceToken::init()->setToken('111111222233344455AAABBBCCCDDDD');
 
 // remote register device token
-$response = \Simplon\Helium\Air::getInstance()
+$response = \Simplon\Helium\Air::init()
      ->setApplicationKey($key)
      ->setApplicationSecret($secret)
      ->registerDeviceToken($deviceToken);
@@ -70,14 +68,13 @@ $master = '12345';
 
 // push notification entity
 $pushNotifications = array();
-$pn = new \Simplon\Helium\PushNotification();
-$pushNotifications[] = $pn
+$pushNotifications[] = \Simplon\Helium\PushNotification::init()
      ->setDeviceTokens(array('111111222233344455AAABBBCCCDDDD'))
-     ->setMessage("Howdy!")
+     ->setAlert("Howdy!")
      ->getData();
 
 // send push to UA's API
-$response = \Simplon\Helium\Air::getInstance()
+$response = \Simplon\Helium\Air::init()
      ->setApplicationKey($key)
      ->setApplicationSecret($secret)
      ->setApplicationMasterSecret($master)
@@ -96,8 +93,7 @@ Meanwhile you also should have received your push notification on your device.
 Well, as always there is more. Registering/managing a device token offers the following other options:
 
 ```php
-$deviceToken = new \Simplon\Helium\DeviceToken();
-$deviceToken
+$deviceToken = \Simplon\Helium\DeviceToken::init()
      ->setToken('111111222233344455AAABBBCCCDDDD')
      ->setAlias('USER_ID')
      ->setTags(array('tag1', 'tag2'))
@@ -116,14 +112,15 @@ $master = '12345';
 
 // push notification entity
 $pushNotifications = array();
-$pn = new \Simplon\Helium\PushNotification();
-$pushNotifications[] = $pn
+$pushNotifications[] = \Simplon\Helium\PushNotification::init()
      ->setAliases(array('USER_ID'))
-     ->setMessage("Howdy again!")
+     ->setAlert("Howdy again!")
+     ->setMetadata('type', 'fresh')
+     ->setMetadata('smile', 'on')
      ->getData();
 
 // send push to UA's API
-$response = \Simplon\Helium\Air::getInstance()
+$response = \Simplon\Helium\Air::init()
      ->setApplicationKey($key)
      ->setApplicationSecret($secret)
      ->setApplicationMasterSecret($master)
