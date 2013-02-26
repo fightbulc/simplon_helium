@@ -1,29 +1,29 @@
 {
-    "name": "simplon/helium",
-    "description": "Library to handle iOS Push Notifications via Urban Airship",
-    "homepage": "https://github.com/fightbulc/simplon_helium",
-    "version": "1.0.2",
-    "type": "library",
-    "keywords": ["urban airship", "notifications", "ios"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Tino Ehrich",
-            "email": "opensource@efides.com",
-            "role": "developer"
-        }
-    ],
-
-    "minimum-stability": "dev",
-
-    "require": {
-        "php": ">=5.3.3",
-        "fightbulc/php_curl": "dev-master"
-    },
-
-    "autoload": {
-        "psr-0": {
-            "Simplon\\Helium\\": "src/"
-        }
+  "name": "simplon/helium",
+  "description": "Library to handle iOS Push Notifications via Urban Airship",
+  "homepage": "https://github.com/fightbulc/simplon_helium",
+  "version": "1.0.2",
+  "type": "library",
+  "keywords": ["urban airship", "notifications", "ios"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tino Ehrich",
+      "email": "opensource@efides.com",
+      "role": "developer"
     }
+  ],
+
+  "minimum-stability": "dev",
+
+  "require": {
+    "php": ">=5.3.3",
+    "fightbulc/php_curl": "1.0.0"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Simplon\\Helium\\": "src/"
+    }
+  }
 }
