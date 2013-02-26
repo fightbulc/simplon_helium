@@ -17,7 +17,7 @@ Since its a composer package all you need to to do is require it within your com
 
 ```json
 "require": {
-   "simplon/helium": "dev-master"
+   "simplon/helium": "1.0.3"
 }
 ```
 
