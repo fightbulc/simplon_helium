@@ -1,9 +1,9 @@
 <?php
 
-  namespace Simplon\Helium;
+namespace Simplon\Helium;
 
-  class Air
-  {
+class Air
+{
     /** @var Air */
     private static $_instance;
 
@@ -41,7 +41,7 @@
      */
     public static function init()
     {
-      return new Air();
+        return new Air();
     }
 
     // ##########################################
@@ -52,7 +52,7 @@
      */
     private function _prepareApiUrl($url)
     {
-      return trim($url, '/');
+        return trim($url, '/');
     }
 
     // ##########################################
@@ -63,7 +63,7 @@
      */
     private function _getCompleteApiUrl($url)
     {
-      return $this->getApiDomain() . '/' . $url . '/';
+        return $this->getApiDomain() . '/' . $url . '/';
     }
 
     // ##########################################
@@ -74,7 +74,7 @@
      */
     private function _jsonEncodeData(array $data)
     {
-      return json_encode($data);
+        return json_encode($data);
     }
 
     // ##########################################
@@ -85,9 +85,9 @@
      */
     public function setApiDomain($domain)
     {
-      $this->apiDomain = $domain;
+        $this->apiDomain = $domain;
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -97,7 +97,7 @@
      */
     protected function getApiDomain()
     {
-      return $this->_prepareApiUrl($this->apiDomain);
+        return $this->_prepareApiUrl($this->apiDomain);
     }
 
     // ##########################################
@@ -108,9 +108,9 @@
      */
     public function setApplicationKey($key)
     {
-      $this->applicationKey = $key;
+        $this->applicationKey = $key;
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -120,7 +120,7 @@
      */
     protected function getApplicationKey()
     {
-      return $this->applicationKey;
+        return $this->applicationKey;
     }
 
     // ##########################################
@@ -131,9 +131,9 @@
      */
     public function setApplicationSecret($secret)
     {
-      $this->applicationSecret = $secret;
+        $this->applicationSecret = $secret;
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -143,7 +143,7 @@
      */
     protected function getApplicationSecret()
     {
-      return $this->applicationSecret;
+        return $this->applicationSecret;
     }
 
     // ##########################################
@@ -154,9 +154,9 @@
      */
     public function setApplicationMasterSecret($masterSecret)
     {
-      $this->applicationMasterSecret = $masterSecret;
+        $this->applicationMasterSecret = $masterSecret;
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -166,7 +166,7 @@
      */
     protected function getApplicationMasterSecret()
     {
-      return $this->applicationMasterSecret;
+        return $this->applicationMasterSecret;
     }
 
     // ##########################################
@@ -176,7 +176,7 @@
      */
     private function _getApplicationKeyAndSecretBundled()
     {
-      return $this->getApplicationKey() . ':' . $this->getApplicationSecret();
+        return $this->getApplicationKey() . ':' . $this->getApplicationSecret();
     }
 
     // ##########################################
@@ -186,7 +186,7 @@
      */
     private function _getApplicationKeyAndMasterSecretBundled()
     {
-      return $this->getApplicationKey() . ':' . $this->getApplicationMasterSecret();
+        return $this->getApplicationKey() . ':' . $this->getApplicationMasterSecret();
     }
 
     // ##########################################
@@ -197,9 +197,9 @@
      */
     public function setNotifications($notifications)
     {
-      $this->notifications = $notifications;
+        $this->notifications = $notifications;
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -209,7 +209,7 @@
      */
     protected function getNotifications()
     {
-      return $this->notifications;
+        return $this->notifications;
     }
 
     // ##########################################
@@ -219,7 +219,7 @@
      */
     protected function getFirstNotification()
     {
-      return array_shift($this->notifications);
+        return array_shift($this->notifications);
     }
 
     // ##########################################
@@ -229,9 +229,9 @@
      */
     protected function resetNotifications()
     {
-      $this->notifications = array();
+        $this->notifications = array();
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -241,7 +241,7 @@
      */
     public function getApiSinglePushUrl()
     {
-      return $this->_prepareApiUrl($this->apiSinglePushUrl);
+        return $this->_prepareApiUrl($this->apiSinglePushUrl);
     }
 
     // ##########################################
@@ -251,7 +251,7 @@
      */
     public function sendSinglePush()
     {
-      return $this->sendPushToApiService($this->getApiSinglePushUrl(), $this->getFirstNotification());
+        return $this->sendPushToApiService($this->getApiSinglePushUrl(), $this->getFirstNotification());
     }
 
     // ##########################################
@@ -261,7 +261,7 @@
      */
     public function getApiBatchPushUrl()
     {
-      return $this->_prepareApiUrl($this->apiBatchPushUrl);
+        return $this->_prepareApiUrl($this->apiBatchPushUrl);
     }
 
     // ##########################################
@@ -271,7 +271,7 @@
      */
     public function sendBatchPush()
     {
-      return $this->sendPushToApiService($this->getApiBatchPushUrl(), $this->getNotifications());
+        return $this->sendPushToApiService($this->getApiBatchPushUrl(), $this->getNotifications());
     }
 
     // ##########################################
@@ -281,7 +281,7 @@
      */
     public function getApiBroadcastUrl()
     {
-      return $this->_prepareApiUrl($this->apiBroadcastUrl);
+        return $this->_prepareApiUrl($this->apiBroadcastUrl);
     }
 
     // ##########################################
@@ -291,7 +291,7 @@
      */
     public function sendBroadcastPush()
     {
-      return $this->sendPushToApiService($this->getApiBroadcastUrl(), $this->getFirstNotification());
+        return $this->sendPushToApiService($this->getApiBroadcastUrl(), $this->getFirstNotification());
     }
 
     // ##########################################
@@ -303,28 +303,28 @@
      */
     protected function sendPushToApiService($serviceUrl, $data)
     {
-      // reset notifcations
-      $this->resetNotifications();
+        // reset notifcations
+        $this->resetNotifications();
 
-      // prepare data
-      $url = $this->_getCompleteApiUrl($serviceUrl);
-      $authString = $this->_getApplicationKeyAndMasterSecretBundled();
-      $jsonData = $this->_jsonEncodeData($data);
+        // prepare data
+        $url = $this->_getCompleteApiUrl($serviceUrl);
+        $authString = $this->_getApplicationKeyAndMasterSecretBundled();
+        $jsonData = $this->_jsonEncodeData($data);
 
-      echo "$url\n";
-      echo $authString . "\n";
-      echo "$jsonData\n\n";
+        echo "$url\n";
+        echo $authString . "\n";
+        echo "$jsonData\n\n";
 
-      // send to api service
-      $response = \CURL::init($url)
-        ->setUserPwd($authString)
-        ->addHttpHeader('Content-type', 'application/json')
-        ->setPost(TRUE)
-        ->setPostFields($jsonData)
-        ->setReturnTransfer(TRUE)
-        ->execute();
+        // send to api service
+        $response = \CURL::init($url)
+            ->setUserPwd($authString)
+            ->addHttpHeader('Content-type', 'application/json')
+            ->setPost(TRUE)
+            ->setPostFields($jsonData)
+            ->setReturnTransfer(TRUE)
+            ->execute();
 
-      return $response;
+        return $response;
     }
 
     // ##########################################
@@ -334,7 +334,7 @@
      */
     public function getApiDeviceTokenUrl()
     {
-      return $this->_prepareApiUrl($this->apiDeviceTokenUrl);
+        return $this->_prepareApiUrl($this->apiDeviceTokenUrl);
     }
 
     // ##########################################
@@ -345,22 +345,22 @@
      */
     public function registerDeviceToken(DeviceToken $deviceToken)
     {
-      // prepare data
-      $serviceUrl = $this->getApiDeviceTokenUrl() . '/' . $deviceToken->getToken();
-      $url = $this->_getCompleteApiUrl($serviceUrl);
-      $authString = $this->_getApplicationKeyAndSecretBundled();
-      $jsonData = $this->_jsonEncodeData($deviceToken->getData());
+        // prepare data
+        $serviceUrl = $this->getApiDeviceTokenUrl() . '/' . $deviceToken->getToken();
+        $url = $this->_getCompleteApiUrl($serviceUrl);
+        $authString = $this->_getApplicationKeyAndSecretBundled();
+        $jsonData = $this->_jsonEncodeData($deviceToken->getData());
 
-      // send to api service
-      $response = \CURL::init($url)
-        ->setUserPwd($authString)
-        ->addHttpHeader('Content-type', 'application/json')
-        ->setCustomRequest('PUT')
-        ->setPostFields($jsonData)
-        ->setReturnTransfer(TRUE)
-        ->execute();
+        // send to api service
+        $response = \CURL::init($url)
+            ->setUserPwd($authString)
+            ->addHttpHeader('Content-type', 'application/json')
+            ->setCustomRequest('PUT')
+            ->setPostFields($jsonData)
+            ->setReturnTransfer(TRUE)
+            ->execute();
 
-      return $response;
+        return $response;
     }
 
     // ##########################################
@@ -371,18 +371,18 @@
      */
     public function getDeviceTokenData($deviceToken)
     {
-      // prepare data
-      $serviceUrl = $this->getApiDeviceTokenUrl() . '/' . $deviceToken;
-      $url = $this->_getCompleteApiUrl($serviceUrl);
-      $authString = $this->_getApplicationKeyAndSecretBundled();
+        // prepare data
+        $serviceUrl = $this->getApiDeviceTokenUrl() . '/' . $deviceToken;
+        $url = $this->_getCompleteApiUrl($serviceUrl);
+        $authString = $this->_getApplicationKeyAndSecretBundled();
 
-      // send to api service
-      $response = \CURL::init($url)
-        ->setUserPwd($authString)
-        ->setReturnTransfer(TRUE)
-        ->execute();
+        // send to api service
+        $response = \CURL::init($url)
+            ->setUserPwd($authString)
+            ->setReturnTransfer(TRUE)
+            ->execute();
 
-      return $response;
+        return $response;
     }
 
     // ##########################################
@@ -392,18 +392,18 @@
      */
     public function getDeviceTokensList()
     {
-      // prepare data
-      $serviceUrl = $this->getApiDeviceTokenUrl();
-      $url = $this->_getCompleteApiUrl($serviceUrl);
-      $authString = $this->_getApplicationKeyAndSecretBundled();
+        // prepare data
+        $serviceUrl = $this->getApiDeviceTokenUrl();
+        $url = $this->_getCompleteApiUrl($serviceUrl);
+        $authString = $this->_getApplicationKeyAndSecretBundled();
 
-      // send to api service
-      $response = \CURL::init($url)
-        ->setUserPwd($authString)
-        ->setReturnTransfer(TRUE)
-        ->execute();
+        // send to api service
+        $response = \CURL::init($url)
+            ->setUserPwd($authString)
+            ->setReturnTransfer(TRUE)
+            ->execute();
 
-      return $response;
+        return $response;
     }
 
     // ##########################################
@@ -414,20 +414,20 @@
      */
     public function getDeviceTokensFailed($dateSince)
     {
-      // ?since=2009-06-01+13:00:00
+        // ?since=2009-06-01+13:00:00
 
-      // prepare data
-      $serviceUrl = $this->getApiDeviceTokenUrl();
-      $url = $this->_getCompleteApiUrl($serviceUrl) . '/feedback/?since=' . $dateSince;
-      $authString = $this->_getApplicationKeyAndMasterSecretBundled();
+        // prepare data
+        $serviceUrl = $this->getApiDeviceTokenUrl();
+        $url = $this->_getCompleteApiUrl($serviceUrl) . '/feedback/?since=' . $dateSince;
+        $authString = $this->_getApplicationKeyAndMasterSecretBundled();
 
-      // send to api service
-      $response = \CURL::init($url)
-        ->setUserPwd($authString)
-        ->setReturnTransfer(TRUE)
-        ->execute();
+        // send to api service
+        $response = \CURL::init($url)
+            ->setUserPwd($authString)
+            ->setReturnTransfer(TRUE)
+            ->execute();
 
-      return $response;
+        return $response;
     }
 
     // ##########################################
@@ -438,18 +438,18 @@
      */
     public function deleteDeviceToken($deviceToken)
     {
-      // prepare data
-      $serviceUrl = $this->getApiDeviceTokenUrl() . '/' . $deviceToken;
-      $url = $this->_getCompleteApiUrl($serviceUrl);
-      $authString = $this->_getApplicationKeyAndSecretBundled();
+        // prepare data
+        $serviceUrl = $this->getApiDeviceTokenUrl() . '/' . $deviceToken;
+        $url = $this->_getCompleteApiUrl($serviceUrl);
+        $authString = $this->_getApplicationKeyAndSecretBundled();
 
-      // send to api service
-      $response = \CURL::init($url)
-        ->setUserPwd($authString)
-        ->setReturnTransfer(TRUE)
-        ->setCustomRequest('DELETE')
-        ->execute();
+        // send to api service
+        $response = \CURL::init($url)
+            ->setUserPwd($authString)
+            ->setReturnTransfer(TRUE)
+            ->setCustomRequest('DELETE')
+            ->execute();
 
-      return $response;
+        return $response;
     }
-  }
+}
