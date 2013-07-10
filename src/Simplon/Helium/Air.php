@@ -311,9 +311,9 @@ class Air
         $authString = $this->_getApplicationKeyAndMasterSecretBundled();
         $jsonData = $this->_jsonEncodeData($data);
 
-        echo "$url\n";
-        echo $authString . "\n";
-        echo "$jsonData\n\n";
+        // echo "$url\n";
+        // echo $authString . "\n";
+        // echo "$jsonData\n\n";
 
         // send to api service
         $response = \CURL::init($url)

@@ -92,12 +92,10 @@ class PushNotification
     {
         if ($this->_aps)
         {
-            echo('DO APS!');
             $this->_setApsElementByKey('alert', $this->_alert);
         }
         if ($this->_android)
         {
-            echo('DO DROID!');
             $this->_setAndroidElementByKey('alert', $this->_alert);
         }
 
