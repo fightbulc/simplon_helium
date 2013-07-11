@@ -1,9 +1,9 @@
 <?php
 
-  namespace Simplon\Helium;
+namespace Simplon\Helium;
 
-  class DeviceToken
-  {
+class DeviceToken
+{
     /** @var DeviceToken */
     private static $_instance;
 
@@ -17,7 +17,7 @@
      */
     public static function init()
     {
-      return new DeviceToken();
+        return new DeviceToken();
     }
 
     // ##########################################
@@ -29,12 +29,11 @@
      */
     protected function setByKey($key, $value)
     {
-      if(! empty($value))
-      {
-        $this->data[$key] = $value;
-      }
+        if (!empty($value)) {
+            $this->data[$key] = $value;
+        }
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -45,12 +44,11 @@
      */
     protected function getByKey($key)
     {
-      if(! isset($this->data[$key]))
-      {
-        return FALSE;
-      }
+        if (!isset($this->data[$key])) {
+            return FALSE;
+        }
 
-      return $this->data[$key];
+        return $this->data[$key];
     }
 
     // ##########################################
@@ -61,9 +59,9 @@
      */
     public function setData($jsonData)
     {
-      $this->data = json_decode($jsonData, TRUE);
+        $this->data = json_decode($jsonData, TRUE);
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -73,7 +71,7 @@
      */
     public function getData()
     {
-      return $this->data;
+        return $this->data;
     }
 
     // ##########################################
@@ -84,9 +82,9 @@
      */
     public function setToken($token)
     {
-      $this->setByKey('token', $token);
+        $this->setByKey('token', $token);
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -96,7 +94,7 @@
      */
     public function getToken()
     {
-      return $this->getByKey('token');
+        return $this->getByKey('token');
     }
 
     // ##########################################
@@ -107,9 +105,9 @@
      */
     public function setAlias($alias)
     {
-      $this->setByKey('alias', $alias);
+        $this->setByKey('alias', $alias);
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -119,7 +117,7 @@
      */
     public function getAlias()
     {
-      return $this->getByKey('alias');
+        return $this->getByKey('alias');
     }
 
     // ##########################################
@@ -130,9 +128,9 @@
      */
     public function setBadge($badge)
     {
-      $this->setByKey('badge', $badge);
+        $this->setByKey('badge', $badge);
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -142,7 +140,7 @@
      */
     public function getBadge()
     {
-      return $this->getByKey('badge');
+        return $this->getByKey('badge');
     }
 
     // ##########################################
@@ -154,14 +152,14 @@
      */
     public function setQuietTime($start, $end)
     {
-      $value = array(
-        'start' => $start,
-        'end'   => $end
-      );
+        $value = array(
+            'start' => $start,
+            'end' => $end
+        );
 
-      $this->setByKey('quiettime', $value);
+        $this->setByKey('quiettime', $value);
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -171,7 +169,7 @@
      */
     public function getQuietTime()
     {
-      return $this->getByKey('quiettime');
+        return $this->getByKey('quiettime');
     }
 
     // ##########################################
@@ -182,9 +180,9 @@
      */
     public function setTags(array $tags)
     {
-      $this->setByKey('tags', $tags);
+        $this->setByKey('tags', $tags);
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -194,7 +192,7 @@
      */
     public function getTags()
     {
-      return $this->getByKey('tags');
+        return $this->getByKey('tags');
     }
 
     // ##########################################
@@ -205,9 +203,9 @@
      */
     public function setTimezone($timezone)
     {
-      $this->setByKey('tz', $timezone);
+        $this->setByKey('tz', $timezone);
 
-      return $this;
+        return $this;
     }
 
     // ##########################################
@@ -217,7 +215,7 @@
      */
     public function getTimezone()
     {
-      return $this->getByKey('tz');
+        return $this->getByKey('tz');
     }
 
     // ##########################################
@@ -227,7 +225,7 @@
      */
     public function getLastRegistrationDate()
     {
-      return $this->getByKey('last_registration_date');
+        return $this->getByKey('last_registration_date');
     }
 
     // ##########################################
@@ -237,6 +235,6 @@
      */
     public function getActiveState()
     {
-      return $this->getByKey('active');
+        return $this->getByKey('active');
     }
-  }
+}
