@@ -4,7 +4,7 @@
   "homepage": "https://github.com/fightbulc/simplon_helium",
   "version": "1.1.0",
   "type": "library",
-  "keywords": ["urban airship", "notifications", "ios"],
+  "keywords": ["urban airship", "notifications", "ios", "android"],
   "license": "MIT",
   "authors": [
     {
