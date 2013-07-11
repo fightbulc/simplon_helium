@@ -16,8 +16,10 @@ So, I took today off to write an abstract project as composer package so that it
 Since its a composer package all you need to to do is require it within your composer package definitions and install/update it:
 
 ```json
-"require": {
-   "simplon/helium": "1.0.3"
+{
+     "require": {
+        "simplon/helium": "1.1.*"
+     }
 }
 ```
 
