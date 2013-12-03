@@ -5,14 +5,15 @@ namespace Simplon\Helium;
 class PushNotification
 {
     /** @var PushNotification */
-    private static $_instance;
+    protected static $_instance;
 
     /** @var array */
-    private $_data = array();
+    protected $_data = array();
 
-    private $_android = false;
-    private $_aps = false;
-    private $_alert = NULL;
+    protected $_android = false;
+    protected $_aps = false;
+    protected $_alert = NULL;
+    protected $_extra = NULL;
 
     // ##########################################
 
@@ -92,11 +93,19 @@ class PushNotification
     {
         if ($this->_aps)
         {
-            $this->_setApsElementByKey('alert', $this->_alert);
+            $this->_setApsElementByKey('alert', $this->_getAlert());
+            if ($this->_getExtra() !== NULL)
+            {
+                $this->_setApsElementByKey('extra', $this->_getExtra());
+            }
         }
         if ($this->_android)
         {
-            $this->_setAndroidElementByKey('alert', $this->_alert);
+            $this->_setAndroidElementByKey('alert', $this->_getAlert());
+            if ($this->_getExtra() !== NULL)
+            {
+                $this->_setAndroidElementByKey('extra', $this->_getExtra());
+            }
         }
 
         return $this->_data;
@@ -389,6 +398,35 @@ class PushNotification
     protected function _getAlert()
     {
         return $this->_alert;
+    }
+
+    // ##########################################
+
+    /**
+     * @param array|null $extra
+     *
+     * @return $this
+     */
+    public function setExtra($extra)
+    {
+        if (is_array($extra))
+        {
+            $this->_extra = $extra;
+        }
+
+        else
+        {
+            $this->_extra = NULL;
+        }
+
+        return $this;
+    }
+
+    // ##########################################
+
+    protected function _getExtra()
+    {
+        return $this->_extra;
     }
 
     // ##########################################
